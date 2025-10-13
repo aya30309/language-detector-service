@@ -10,8 +10,8 @@ router.post("/detect", languageController.detectSingle);
 // Endpoint: Detect batch texts 
 router.post("/detect/batch", languageController.detectBatch);
 
-// Endpoint: Get supported languages
-router.get("/languages", languageController.getSupportedLanguages);
+// Endpoint: Supported languages
+router.get("/supported", languageController.getSupportedLanguages);
 
 // Endpoint: Health check
 router.get("/health", languageController.healthCheck);

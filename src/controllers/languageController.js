@@ -64,9 +64,14 @@ class LanguageController {
     }
   }
 
-  // supported languages not implemented yet
+  // Supported languages endpoint
   async getSupportedLanguages(req, res, next) {
-    res.status(501).json({ message: "Supported languages not implemented yet" });
+    try {
+      const languages = languageDetectionService.getSupportedLanguages();
+      res.status(200).json({ languages });
+    } catch (error) {
+      next(error);
+    }
   }
 
   // Health check endpoint
