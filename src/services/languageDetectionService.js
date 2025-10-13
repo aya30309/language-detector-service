@@ -1,5 +1,6 @@
 
-import franc from "franc"; 
+import * as franc from "franc";
+
 
 class LanguageDetectionService {
   /**
@@ -17,7 +18,8 @@ class LanguageDetectionService {
     }
 
     // Detect language code using franc
-    const langCode = franc(text);
+   const langCode = franc.franc(text);
+
 
     return {
       language: langCode !== "und" ? langCode : "unknown", 
