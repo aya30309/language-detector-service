@@ -28,9 +28,40 @@ class LanguageController {
     }
   }
 
-  // Batch detection not implemented yet
+  // Batch detection
   async detectBatch(req, res, next) {
-    res.status(501).json({ message: "Batch detection not implemented yet" });
+    try {
+      const { texts } = req.body;
+
+      // Validation: ensure array exists and not empty
+      if (!Array.isArray(texts) || texts.length === 0) {
+        return res.status(400).json({
+          error: "Invalid input",
+          message: "Please provide an array of texts to detect languages",
+        });
+      }
+
+      // Validate each text and run detection
+      const results = texts.map((t) => {
+        if (!t || t.trim().length === 0) {
+          return {
+            text: t,
+            error: "Empty text provided",
+          };
+        }
+
+        const detection = languageDetectionService.detect(t);
+        return {
+          text: t,
+          language: detection.language,
+          confidence: detection.confidence,
+        };
+      });
+
+      res.status(200).json({ results });
+    } catch (error) {
+      next(error);
+    }
   }
 
   // supported languages not implemented yet
