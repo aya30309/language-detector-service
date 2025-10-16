@@ -1,0 +1,4 @@
+[2025-10-16T21:27:25.351Z] REQUEST: POST /api/language/detect
+[2025-10-16T21:27:25.356Z] RESPONSE: POST /api/language/detect | Status: 200 | Time: 5ms
+[2025-10-16T21:27:49.953Z] REQUEST: POST /api/language/detect/batch
+[2025-10-16T21:27:49.956Z] RESPONSE: POST /api/language/detect/batch | Status: 200 | Time: 3ms
