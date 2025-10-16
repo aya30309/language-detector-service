@@ -134,14 +134,3 @@ Backend Developer (.NET & Node.js)
 💼 [(https://www.linkedin.com/in/ayasamirselim/?locale=en_US)]
 
 ---
-
-## 🪪 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-```
-
----
-
-هل تحبي أعدّله ليكون فيه اسمك و لينك GitHub الحقيقي + أضيفلك مثال حقيقي للـ POST `/api/language` endpoint زي اللي في مشروعك؟
-```
