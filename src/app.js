@@ -4,6 +4,7 @@ import express from "express";           // Framework for building web servers
 import dotenv from "dotenv";             // To load environment variables from .env file
 import languageRoutes from "./routes/languageRoutes.js"; // Language detection routes
 import { errorHandler } from "./middleware/errorHandler.js"; // Custom error handler middleware
+import languageController from "./controllers/languageController.js"; // Language controller for health check
 
 // Initialize environment variables
 dotenv.config();
@@ -16,7 +17,8 @@ app.use(express.json());
 
 // Base route for all language detection endpoints
 app.use("/api/language", languageRoutes);
-
+// Health check endpoint
+app.get("/api/health", languageController.healthCheck);
 // Global error handler (to handle all errors in one place)
 app.use(errorHandler);
 
