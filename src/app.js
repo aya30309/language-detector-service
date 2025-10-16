@@ -4,6 +4,7 @@ import express from "express";           // Framework for building web servers
 import dotenv from "dotenv";             // To load environment variables from .env file
 import languageRoutes from "./routes/languageRoutes.js"; // Language detection routes
 import { errorHandler } from "./middleware/errorHandler.js"; // Custom error handler middleware
+import { validateSingleText, validateBatchTexts } from "./middleware/validator.js"; // Validation middleware
 import languageController from "./controllers/languageController.js"; // Language controller for health check
 import { logger, errorLogger } from './utils/logger.js';
 

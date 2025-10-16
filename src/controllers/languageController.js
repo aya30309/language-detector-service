@@ -1,21 +1,16 @@
-
 import languageDetectionService from "../services/languageDetectionService.js";
 
 class LanguageController {
-  // Detect single text
+  /**
+   * Detect language for a single text.
+   * @param {import('express').Request} req
+   * @param {import('express').Response} res
+   */
   async detectSingle(req, res, next) {
     try {
       const { text } = req.body;
 
-      // Validation: text required
-      if (!text || text.trim().length === 0) {
-        return res.status(400).json({
-          error: "Text is required",
-          message: "Please provide text to detect language",
-        });
-      }
-
-      // Call service to detect language
+      // Call the service to detect language
       const result = languageDetectionService.detect(text);
 
       res.status(200).json({
@@ -28,20 +23,16 @@ class LanguageController {
     }
   }
 
-  // Batch detection
+  /**
+   * Detect languages for multiple texts in batch.
+   * @param {import('express').Request} req
+   * @param {import('express').Response} res
+   */
   async detectBatch(req, res, next) {
     try {
       const { texts } = req.body;
 
-      // Validation: ensure array exists and not empty
-      if (!Array.isArray(texts) || texts.length === 0) {
-        return res.status(400).json({
-          error: "Invalid input",
-          message: "Please provide an array of texts to detect languages",
-        });
-      }
-
-      // Validate each text and run detection
+      // Map each text to its detection result
       const results = texts.map((t) => {
         if (!t || t.trim().length === 0) {
           return {
@@ -64,7 +55,11 @@ class LanguageController {
     }
   }
 
-  // Supported languages endpoint
+  /**
+   * Return list of supported languages.
+   * @param {import('express').Request} req
+   * @param {import('express').Response} res
+   */
   async getSupportedLanguages(req, res, next) {
     try {
       const languages = languageDetectionService.getSupportedLanguages();
@@ -74,7 +69,11 @@ class LanguageController {
     }
   }
 
-  // Health check endpoint
+  /**
+   * Health check endpoint.
+   * @param {import('express').Request} req
+   * @param {import('express').Response} res
+   */
   async healthCheck(req, res) {
     res.status(200).json({
       status: "ok",
