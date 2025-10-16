@@ -1,0 +1,125 @@
+{
+  "info": {
+    "_postman_id": "abcdef12-3456-7890-abcd-ef1234567890",
+    "name": "Language Detector Service - Test Requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection to test all endpoints of the Language Detector Service with realistic examples."
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Detect Single Text (English)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Hello, how are you?\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/language/detect",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "language", "detect"]
+        }
+      },
+      "response": [
+        {
+          "name": "Expected Response",
+          "originalRequest": {},
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"language\": \"en\",\n  \"confidence\": 0.99,\n  \"detectedText\": \"Hello, how are you?\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Detect Single Text (Arabic)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"مرحبا بك في خدمتنا\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/language/detect",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "language", "detect"]
+        }
+      },
+      "response": [
+        {
+          "name": "Expected Response",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"language\": \"ar\",\n  \"confidence\": 0.95,\n  \"detectedText\": \"مرحبا بك في خدمتنا\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Detect Batch Texts",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texts\": [\n    \"Hello world\",\n    \"مرحبا\",\n    \"Bonjour tout le monde\"\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/language/detect/batch",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "language", "detect", "batch"]
+        }
+      },
+      "response": [
+        {
+          "name": "Expected Response",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"results\": [\n    {\"text\": \"Hello world\", \"language\": \"en\", \"confidence\": 0.99},\n    {\"text\": \"مرحبا\", \"language\": \"ar\", \"confidence\": 0.95},\n    {\"text\": \"Bonjour tout le monde\", \"language\": \"fr\", \"confidence\": 0.92}\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "name": "Supported Languages",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/language/supported",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "language", "supported"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

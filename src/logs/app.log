@@ -51,3 +51,13 @@
 [2025-10-16T22:26:06.877Z] RESPONSE: POST /api/language/detect/batch | Status: 400 | Time: 5ms
 [2025-10-16T22:26:13.718Z] REQUEST: POST /api/language/detect
 [2025-10-16T22:26:13.719Z] RESPONSE: POST /api/language/detect | Status: 400 | Time: 1ms
+[2025-10-16T22:39:29.947Z] REQUEST: GET /api/health
+[2025-10-16T22:39:29.953Z] RESPONSE: GET /api/health | Status: 200 | Time: 6ms
+[2025-10-16T22:39:35.759Z] REQUEST: POST /api/language/detect
+[2025-10-16T22:39:35.761Z] RESPONSE: POST /api/language/detect | Status: 200 | Time: 2ms
+[2025-10-16T22:39:41.077Z] REQUEST: POST /api/language/detect
+[2025-10-16T22:39:41.079Z] RESPONSE: POST /api/language/detect | Status: 200 | Time: 2ms
+[2025-10-16T22:39:51.887Z] REQUEST: POST /api/language/detect/batch
+[2025-10-16T22:39:51.890Z] RESPONSE: POST /api/language/detect/batch | Status: 200 | Time: 3ms
+[2025-10-16T22:39:58.598Z] REQUEST: GET /api/language/supported
+[2025-10-16T22:39:58.599Z] RESPONSE: GET /api/language/supported | Status: 200 | Time: 1ms
