@@ -19,3 +19,35 @@
 [2025-10-16T22:11:46.402Z] RESPONSE: POST /api/language/detect | Status: 500 | Time: 8ms
 [2025-10-16T22:11:53.280Z] REQUEST: POST /api/language/detect/batch
 [2025-10-16T22:11:53.284Z] RESPONSE: POST /api/language/detect/batch | Status: 200 | Time: 4ms
+[2025-10-16T22:14:55.712Z] REQUEST: POST /api/language/detect
+[2025-10-16T22:14:55.719Z] RESPONSE: POST /api/language/detect | Status: 200 | Time: 7ms
+[2025-10-16T22:19:11.756Z] REQUEST: POST /api/language/detect
+[2025-10-16T22:19:11.757Z] ERROR: Text is required | Stack: Error: Text is required
+    at LanguageDetectionService.detect (file:///D:/00Tracks/AppOut/language-detector-service-Project/language-detector-service/src/services/languageDetectionService.js:12:13)
+    at detectSingle (file:///D:/00Tracks/AppOut/language-detector-service-Project/language-detector-service/src/controllers/languageController.js:14:47)
+    at Layer.handleRequest (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\lib\layer.js:152:17)
+    at next (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\lib\route.js:117:3)
+    at handle (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\lib\layer.js:152:17)
+    at D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:295:15
+    at processParams (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:582:12)
+    at next (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:291:5)
+[2025-10-16T22:19:11.760Z] RESPONSE: POST /api/language/detect | Status: 500 | Time: 4ms
+[2025-10-16T22:19:47.699Z] REQUEST: POST /api/language/detect/batch
+[2025-10-16T22:19:47.701Z] ERROR: Cannot read properties of undefined (reading 'map') | Stack: TypeError: Cannot read properties of undefined (reading 'map')
+    at detectBatch (file:///D:/00Tracks/AppOut/language-detector-service-Project/language-detector-service/src/controllers/languageController.js:36:29)
+    at Layer.handleRequest (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\lib\layer.js:152:17)
+    at next (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\lib\route.js:117:3)
+    at handle (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\lib\layer.js:152:17)
+    at D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:295:15
+    at processParams (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:582:12)
+    at next (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:291:5)
+    at Function.handle (D:\00Tracks\AppOut\language-detector-service-Project\language-detector-service\node_modules\router\index.js:186:3)
+[2025-10-16T22:19:47.702Z] RESPONSE: POST /api/language/detect/batch | Status: 500 | Time: 3ms
+[2025-10-16T22:26:06.872Z] REQUEST: POST /api/language/detect/batch
+[2025-10-16T22:26:06.877Z] RESPONSE: POST /api/language/detect/batch | Status: 400 | Time: 5ms
+[2025-10-16T22:26:13.718Z] REQUEST: POST /api/language/detect
+[2025-10-16T22:26:13.719Z] RESPONSE: POST /api/language/detect | Status: 400 | Time: 1ms
