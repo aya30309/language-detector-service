@@ -3,61 +3,107 @@ import langs from "langs";
 
 class LanguageDetectionService {
   /**
-   * Detect language of given text
-   * @param {string} text - Text to analyze
-   * @returns {Object} - { language, confidence }
+   * Detects the language of a given text
+   * @param {string} text - The text to analyze
+   * @returns {{ language: string, confidence: number }}
    */
   detect(text) {
-    // Validation: empty or too short text
     if (!text || text.trim().length === 0) {
       throw new Error("Text is required");
     }
+
     if (text.trim().length < 3) {
       return { language: "unknown", confidence: 0 };
     }
 
-    // Detect language code using franc
-    const langCode = franc.franc(text);
+    const cleaned = this.preprocessText(text);
+    if (cleaned.length < 2) {
+      return { language: "unknown", confidence: 0 };
+    }
 
-    // Convert 3-letter code to 2-letter if possible
+    // Try quick detection based on script or common keywords
+    const quick = this.quickDetectByScriptAndKeywords(cleaned);
+    if (quick) {
+      const confidence = this.calculateConfidenceForHeuristic(cleaned);
+      return { language: quick.lang, confidence };
+    }
+
+    // Detect language using franc
+    const langCode3 = franc.franc(cleaned);
     let language = "unknown";
-    if (langCode !== "und") {
-      const langInfo = langs.where("3", langCode);
-      if (langInfo) {
-        language = langInfo["1"] || langCode;
+
+    if (langCode3 && langCode3 !== "und") {
+      const langInfo = langs.where("3", langCode3);
+      language = langInfo ? langInfo["1"] || langCode3 : langCode3;
+    }
+
+    // Apply fallback detection if franc result is uncertain
+    if (language === "unknown" || language === "ur") {
+      const smart = this.smartDetect(cleaned);
+      if (smart !== "unknown") {
+        const confidence = this.calculateConfidenceForHeuristic(cleaned);
+        return { language: smart, confidence };
       }
     }
 
+    // Default return with computed confidence
     return {
       language,
-      confidence: this.calculateConfidence(text, langCode),
+      confidence: this.calculateConfidence(cleaned, langCode3),
     };
   }
 
   /**
-   * Detect languages for multiple texts
-   * @param {Array<string>} texts - Array of texts
-   * @returns {Array} - Array of detection results
+   * Detects languages quickly based on script and common keywords.
+   * Returns { lang } or null.
    */
-  detectBatch(texts) {
-    if (!Array.isArray(texts)) throw new Error("texts must be an array");
+  quickDetectByScriptAndKeywords(text) {
+    // Arabic letters
+    if (/[\u0600-\u06FF]/.test(text)) return { lang: "ar" };
 
-    // Map each text to its detection result
-    const results = texts.map((t) => {
-      try {
-        const { language, confidence } = this.detect(t);
-        return { text: t, language, confidence };
-      } catch (err) {
-        // On error, return unknown
-        return { text: t, language: "unknown", confidence: 0 };
+    // French special characters
+    if (/[éèêëàâäîïôöùûüç]/i.test(text)) return { lang: "fr" };
+
+    // Common English words
+    const englishKeywords = [
+      "the", "and", "is", "are", "i", "you", "love", "how", "what",
+      "do", "does", "doesn't", "don't", "learn", "learning",
+      "programming", "hello", "hi", "thanks"
+    ];
+
+    const tokens = text.split(/\s+/).map(t => t.replace(/[^a-zA-Z']/g, ''));
+    for (const token of tokens) {
+      if (englishKeywords.includes(token.toLowerCase())) {
+        return { lang: "en" };
       }
-    });
+    }
 
-    return results;
+    return null;
   }
 
   /**
-   * Get list of supported languages (subset example)
+   * Boosts confidence for heuristic-based results.
+   */
+  calculateConfidenceForHeuristic(text) {
+    const base = Math.min(0.98, Math.max(0.45, text.length / 100));
+    const boost = 0.12;
+    return parseFloat(Math.min(0.99, base + boost).toFixed(2));
+  }
+
+  /**
+   * Cleans text by removing emojis, numbers, and extra punctuation.
+   */
+  preprocessText(text) {
+    return text
+      .replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, "")
+      .replace(/[0-9!@#$%^&*(),.?":{}|<>_\-=\+\[\]\\;’‘“”—]/g, "")
+      .replace(/\s+/g, " ")
+      .toLowerCase()
+      .trim();
+  }
+
+  /**
+   * Returns supported languages list.
    */
   getSupportedLanguages() {
     return [
@@ -69,28 +115,29 @@ class LanguageDetectionService {
     ];
   }
 
-  /*
-   * Calculate confidence score 
-  //  */
-  // calculateConfidence(text, langCode) {
-  //   // Simple heuristic: longer text → higher confidence
-  //   if (langCode === "und") return 0;
-  //   const len = text.trim().length;
-  //   const confidence = Math.min(0.99, Math.max(0.5, len / 100));
-  //   return parseFloat(confidence.toFixed(2));
-  // }
-
-
+  /**
+   * Calculates confidence based on text length and character diversity.
+   */
   calculateConfidence(text, langCode) {
-      if (!text || text.length < 5) return 0.3;
-      if (langCode === "unknown") return 0.2;
+    if (!text || text.length < 5) return 0.3;
+    if (langCode === "unknown") return 0.2;
 
-      const lengthFactor = Math.min(text.length / 50, 1);
-      const uniqueChars = new Set(text).size / text.length;
-      const base = (lengthFactor + uniqueChars) / 2;
-      return Number((0.5 + base / 2).toFixed(2));
+    const lengthFactor = Math.min(text.length / 50, 1);
+    const uniqueChars = new Set(text).size / text.length;
+    const base = (lengthFactor + uniqueChars) / 2;
+
+    return Number((0.5 + base / 2).toFixed(2));
   }
 
+  /**
+   * Placeholder for smart detection (script-based fallback)
+   */
+  smartDetect(text) {
+    if (/[\u0600-\u06FF]/.test(text)) return "ar";
+    if (/[éèêëàâäîïôöùûüç]/i.test(text)) return "fr";
+    if (/^[a-zA-Z\s]+$/.test(text)) return "en";
+    return "unknown";
+  }
 }
 
 export default new LanguageDetectionService();
