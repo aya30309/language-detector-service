@@ -8,7 +8,7 @@ The project also includes a custom **Logger Middleware** for tracking requests, 
 
 ## 📁 Project Structure
 
-```
+```markdown
 
 src/
 ├── controllers/          # Contains route handlers that call the service and send responses
