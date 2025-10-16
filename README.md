@@ -9,6 +9,7 @@ The project also includes a custom **Logger Middleware** for tracking requests, 
 ## 📁 Project Structure
 
 ```
+
 src/
 ├── controllers/          # Contains route handlers that call the service and send responses
 ├── middleware/           # Custom middlewares (error handler, validator, etc.)
@@ -17,6 +18,7 @@ src/
 ├── logs/                 # Folder where log files are saved (auto-created)
 ├── services/             # Business logic for language detection (LanguageDetectionService)
 └── app.js                # Main entry point: sets up Express server and middleware
+
 ````
 
 ---
@@ -57,11 +59,12 @@ src/
 ---
 
 ## 🧩 API Endpoints
-
-| Method | Endpoint        | Description           |
-| ------ | --------------- | --------------------- |
-| GET    | `/api/health`   | Health check endpoint |
-| POST   | `/api/language` | Detect text language  |
+| Method | Endpoint               | Description                  |
+| ------ | --------------------- | ---------------------------- |
+| GET    | `/api/health`          | Health check                |
+| POST   | `/api/language/detect` | Detect single text language |
+| POST   | `/api/language/detect/batch` | Detect multiple texts      |
+| GET    | `/api/language/supported`    | List supported languages   |
 
 Example request:
 
@@ -106,7 +109,7 @@ You can test the endpoints using **Postman**.
 A ready-to-use Postman collection is available in:
 
 ```
-test-requests.postman_collection.json
+test-requests.json
 ```
 
 Steps:
